@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom'
 import {userInfoContext} from '../Contexts/LoginContext/userInfoProvider'
 
 const TopNavBar= () => {
-const [Name,Password,Email,isAuthenticated, Viewer] = useContext(userInfoContext)
+const [Name,Password,Email,isAuthenticated, Viewer, accessToken] = useContext(userInfoContext)
 const [passwordState,setPassword] = Password
 const [emailState,setEmail] = Email
 const [fullNameState,setFullName] = Name

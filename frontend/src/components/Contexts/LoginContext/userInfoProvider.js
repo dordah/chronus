@@ -9,6 +9,7 @@ const UserInfoProvider = ({children}) => {
     const [emailState,setEmail] = useState("")
     const [isAuth, SetisAuth] = useState(false)
     const [viewer, setViewer] = useState(0)
+    const [accessToken, SetaccessToken] = useState("")
 
     useEffect(() => {
       const localStorageData = (localStorage.getItem("UserInfo"))
@@ -18,12 +19,13 @@ const UserInfoProvider = ({children}) => {
       setEmail(parsedData.userEmail)
       SetisAuth(parsedData.userIsAuth)
       setViewer(parsedData.userViewer)
+      SetaccessToken(parsedData.accessToken)
     }, [])
 
     useEffect(() => {
-      const userInfo = {"userName":fullNameState,"userPassword":passwordState,"userEmail":emailState,"userIsAuth":isAuth, "userViewer":viewer}
+      const userInfo = {"userName":fullNameState,"userPassword":passwordState,"userEmail":emailState,"userIsAuth":isAuth, "userViewer":viewer, "accessToken":accessToken}
       localStorage.setItem("UserInfo", JSON.stringify(userInfo))
-    },[fullNameState,passwordState,emailState,isAuth,viewer])
+    },[fullNameState,passwordState,emailState,isAuth,viewer,accessToken])
 
     return ( 
       <userInfoContext.Provider 
@@ -31,7 +33,8 @@ const UserInfoProvider = ({children}) => {
       [passwordState,setPassword],
       [emailState,setEmail],
       [isAuth, SetisAuth],
-      [viewer, setViewer]]}>
+      [viewer, setViewer],
+      [accessToken, SetaccessToken]]}>
            {children}
       </userInfoContext.Provider>
     )

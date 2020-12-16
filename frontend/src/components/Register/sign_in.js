@@ -7,23 +7,25 @@ import {userInfoContext} from '../Contexts/LoginContext/userInfoProvider'
 
 const SignIn = () => { 
 const history = useHistory();
-const [Name,Password,,isAuthenticated,Viewer] = useContext(userInfoContext)
+const [Name,Password,,isAuthenticated,Viewer,accessToken] = useContext(userInfoContext)
 const [passwordState,setPassword] = Password
 const [fullNameState,setFullName] = Name
 const [isAuth, SetisAuth] = isAuthenticated
 const [viewer, setViewer] = Viewer
+const [accessTokenState, SetaccessToken] = accessToken
 
  
 const submitHandler = () => {
     console.log('clicked');
-    fetch('https://chronus-cda87.firebaseio.com/sign-in.json',{
+    fetch('http:/login',{
     method: 'POST',
-    body: JSON.stringify({FullName:fullNameState, password: passwordState}),
+    body: JSON.stringify({username:fullNameState}),
     headers: {'Content-Type': 'application/json'},
     }).then(response => {
         return response.json()
     }).then(responseData => {
-        console.log(responseData.name);
+        console.log(responseData);   
+        SetaccessToken(responseData.accessToken)
     }).then(SetisAuth(true),setViewer(2)).then(history.push('/MainTradeRoom'))
        
 }

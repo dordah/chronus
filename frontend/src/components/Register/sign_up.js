@@ -9,24 +9,25 @@ import {useHistory} from 'react-router-dom'
 
 const SignUp = () => { 
 const history = useHistory();
-const [Name,Password,Email,isAuthenticated,Viewer] = useContext(userInfoContext)
+const [Name,Password,Email,isAuthenticated,Viewer,accessToken] = useContext(userInfoContext)
 const [passwordState,setPassword] = Password
 const [emailState,setEmail] = Email
 const [fullNameState,setFullName] = Name
 const [isAuth, SetisAuth] = isAuthenticated
 const [viewer, setViewer] = Viewer
+const [accessTokenState, SetaccessToken] = accessToken
 
 
 const submitHandler = () => {
     console.log('clicked');
-    fetch('https://chronus-cda87.firebaseio.com/sign-up.json',{
-    method: 'POST',
-    body: JSON.stringify({FullName:fullNameState, password: passwordState, email: emailState}),
-    headers: {'Content-Type': 'application/json'},
+    fetch('http:/posts',{
+    method: 'GET',
+    // body: JSON.stringify({username:fullNameState}),//, password: passwordState, email: emailState}),
+    headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${accessTokenState}`},
     }).then(response => {
         return response.json()
     }).then(responseData => {
-        console.log(responseData.name);
+        console.log(responseData);
     }).then(SetisAuth(true),setViewer(1)).then(history.push('/MainTradeRoom'))
 }
     return (
