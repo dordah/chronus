@@ -30,8 +30,6 @@ const client = new Client({
 
 client.connect();
 
-const name = "Dor";
-
 // client.query(`SELECT * from users where name = '${name}'`,(err, res)=>{
 //   console.log(err,res)
 // })
