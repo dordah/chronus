@@ -4,8 +4,7 @@ import NavApp from '../NavApp/TopNavBar'
 
 
 const MainPageProfile = () => {
-
-const [imageState,setImage] = useState('')
+const [imageState,setImage] = useState('') //[varible,function]
 const [fisrtNameState,setFisrtName] = useState('')
 const [lastNameState,setLastName] = useState('')
 const [passwordState,setPassword] = useState('')
