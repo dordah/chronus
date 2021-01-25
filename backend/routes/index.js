@@ -43,24 +43,42 @@ app.get("/apiv1/home", (req, res) => {
 const posts = [
   {
     username: "Boaz",
-    title: "Post 1",
+    password: "arsenalSucks",
   },
   {
     username: "Dor",
-    title: "Post 2",
+    password: "123",
   },
 ];
 
 app.get("/posts", authenticateToken, (req, res) => {
-  res.json(posts.filter((post) => post.username === req.user.name));
+  username = posts.filter((post) => post.username === req.user.name);
+  res.json({ username });
 });
 
 app.post("/login", (req, res) => {
   // Authenticat User
   const username = req.body.username;
-  const user = { name: username };
-  const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-  res.json({ accessToken: accessToken });
+  const password = req.body.password;
+  // Send back to client json with all data (Front) - (DB) - Check if user exist && Password ? Return user's details : Deny (401)
+  // TODO - Set cookie for client -> { accessToken(Data) }
+  let user;
+  if (
+    posts.some((a) => a.username === username) &&
+    posts.some((a) => a.password === password)
+  ) {
+    user = { name: username };
+  } else {
+    user = null;
+  }
+  if (user != null) {
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    // set cookie({ accessToken: accessToken })
+    res.json({ userRes: user });
+    document.cookie = `username=${user}`;
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 function authenticateToken(req, res, next) {
