@@ -4,6 +4,9 @@ module.exports = new Sequelize("v1", "postgres", "united", {
   host: "localhost",
   dialect: "postgres",
   operatorsAliases: false,
+  define: {
+    timestamps: false,
+  },
 
   pool: {
     max: 5,

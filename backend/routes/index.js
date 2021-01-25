@@ -10,6 +10,7 @@ const path = require("path");
 const exp = require("express-handlebars");
 const app = express();
 const jwt = require("jsonwebtoken");
+var cookieParser = require("cookie-parser");
 
 // Database
 const db = require("./config/database");
@@ -21,8 +22,7 @@ db.authenticate()
   .catch((err) => console.log("Error: " + err));
 
 app.use(bodyParser.json());
-
-router.use(bodyParser.json());
+app.use(cookieParser());
 
 const client = new Client({
   connectionString: conncetionString,
@@ -74,8 +74,9 @@ app.post("/login", (req, res) => {
   if (user != null) {
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     // set cookie({ accessToken: accessToken })
+    res.cookie("session_id", accessToken);
     res.json({ userRes: user });
-    document.cookie = `username=${user}`;
+    res.sendStatus(200);
   } else {
     res.sendStatus(404);
   }
