@@ -4,20 +4,24 @@ import {NavLink} from 'react-router-dom'
 import {userInfoContext} from '../Contexts/LoginContext/userInfoProvider'
 
 const TopNavBar= () => {
-const [Name,Password,Email,isAuthenticated, Viewer, accessToken] = useContext(userInfoContext)
+const [Name,Password,Email,isLoggedInCheck, Viewer] = useContext(userInfoContext)
 const [passwordState,setPassword] = Password
 const [emailState,setEmail] = Email
 const [fullNameState,setFullName] = Name
-const [isAuth, SetisAuth] = isAuthenticated
+const [isLoggedIn, SetisLoggedIn] = isLoggedInCheck
 const [viewer, setViewer] = Viewer
 
 
 const signHandler = () =>{
-if(isAuth === true){
+if(isLoggedIn === true){
+  fetch("/logout",{
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
   setFullName('')
   setEmail('')
   setPassword('')
-  SetisAuth(false)
+  SetisLoggedIn(false)
   setViewer(0)
 }
 }
@@ -30,12 +34,12 @@ return (
     <Nav className="mr-auto">
       <Nav.Link as={NavLink} to="/Home">Home</Nav.Link>
       <Nav.Link as={NavLink} to="/MainTradeRoom">Trade Room</Nav.Link>
-      <Nav.Link as={NavLink} disabled={isAuth===false} to="/Profile">Profile</Nav.Link>
-      <Nav.Link as={NavLink} disabled={isAuth===false} to={"/Balance"}>Balance</Nav.Link>
+      <Nav.Link as={NavLink} disabled={isLoggedIn===false} to="/Profile">Profile</Nav.Link>
+      <Nav.Link as={NavLink} disabled={isLoggedIn===false} to={"/Balance"}>Balance</Nav.Link>
     </Nav>
     <Nav>
       <Nav.Link as={NavLink} to="/AboutOurTeam">About Our Team</Nav.Link>
-<Nav.Link onClick={signHandler} as={NavLink} eventKey={2} to={isAuth?'/Home':"/MainRegisterPage"}> {isAuth? `Sign-out`:'Sign-in'} </Nav.Link>
+<Nav.Link onClick={signHandler} as={NavLink} eventKey={2} to={isLoggedIn?'/Home':"/MainRegisterPage"}> {isLoggedIn? `Sign-out`:'Sign-in'} </Nav.Link>
     </Nav>
 </Navbar>
 </div>

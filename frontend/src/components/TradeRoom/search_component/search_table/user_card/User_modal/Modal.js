@@ -6,7 +6,7 @@ import ChatCard from '../../../../Chat/ChatList/ChatCard/ChatCard'
 import {userInfoContext} from '../../../../../Contexts/LoginContext/userInfoProvider'
 
 const Modal1 = (props) => {
-const [Name,Password,Email,isAuthenticated,Viewer,accessToken] = useContext(userInfoContext)
+const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
 const [viewer, setViewer] = Viewer
  
 

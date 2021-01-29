@@ -10,7 +10,7 @@ import {userInfoContext} from '../../../../Contexts/LoginContext/userInfoProvide
 
 const ChatCard = (props) => {
 
-const [Name,Password,Email,isAuthenticated,Viewer] = useContext(userInfoContext)
+const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
 const [viewer, setViewer] = Viewer
 
 const [modalShow, setModalShow] = useState(false)

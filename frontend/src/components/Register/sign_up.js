@@ -9,13 +9,12 @@ import {useHistory} from 'react-router-dom'
 
 const SignUp = () => { 
 const history = useHistory();
-const [Name,Password,Email,isAuthenticated,Viewer,accessToken] = useContext(userInfoContext)
+const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
 const [passwordState,setPassword] = Password
 const [emailState,setEmail] = Email
 const [fullNameState,setFullName] = Name
-const [isAuth, SetisAuth] = isAuthenticated
+const [isLoggedIn, SetisLoggedIn] = isLoggedInCheck
 const [viewer, setViewer] = Viewer
-const [accessTokenState, SetaccessToken] = accessToken
 
 
 const submitHandler = () => {
@@ -23,12 +22,11 @@ const submitHandler = () => {
     fetch('http:/posts',{
     method: 'GET',
     // body: JSON.stringify({username:fullNameState}),//, password: passwordState, email: emailState}),
-    headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${accessTokenState}`},
+    headers: {'Content-Type': 'application/json'},
     }).then(response => {
         return response.json()
     }).then(responseData => {
-        console.log(responseData);
-    }).then(SetisAuth(true),setViewer(1)).then(history.push('/MainTradeRoom'))
+    }).then(SetisLoggedIn(true),setViewer(1)).then(history.push('/MainTradeRoom'))
 }
     return (
         <div>

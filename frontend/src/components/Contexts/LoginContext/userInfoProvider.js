@@ -4,37 +4,45 @@ export const userInfoContext = createContext({})
 
 const UserInfoProvider = ({children}) => {
 
-    const [fullNameState,setFullName] = useState("")
-    const [passwordState,setPassword] = useState("")
-    const [emailState,setEmail] = useState("")
-    const [isAuth, SetisAuth] = useState(false)
-    const [viewer, setViewer] = useState(0)
-    const [accessToken, SetaccessToken] = useState("")
+    const [fullNameState,setFullName] = useState("") 
+    const [passwordState,setPassword] = useState("") 
+    const [emailState,setEmail] = useState("") 
+    const [isLoggedIn , setIsLoggedIn] = useState(false) // is user is logged in, info from server
+    const [viewer, setViewer] = useState(0) // Authurization mode for user 0,1,2, info from server 
+  
 
-    useEffect(() => {
-      const localStorageData = (localStorage.getItem("UserInfo"))
-      const parsedData = JSON.parse(localStorageData)
-      setFullName(parsedData.userName)
-      setPassword(parsedData.userPassword)
-      setEmail(parsedData.userEmail)
-      SetisAuth(parsedData.userIsAuth)
-      setViewer(parsedData.userViewer)
-      SetaccessToken(parsedData.accessToken)
+    useEffect( async ()  => {
+      let response = null 
+      let message = null
+      try{
+       response = await fetch("/cookie", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+    catch(err) {
+      message.innerHTML = "Error: " + err + ".";
+    }
+    const json = await response.json()
+    console.log(json)
+    if (json !== undefined) {
+        setFullName(json.name)
+        setPassword("")
+        setEmail(json.email)
+        setIsLoggedIn(json.loggedIn)
+        setViewer(json.viewer) 
+    }
     }, [])
-
-    useEffect(() => {
-      const userInfo = {"userName":fullNameState,"userPassword":passwordState,"userEmail":emailState,"userIsAuth":isAuth, "userViewer":viewer, "accessToken":accessToken}
-      localStorage.setItem("UserInfo", JSON.stringify(userInfo))
-    },[fullNameState,passwordState,emailState,isAuth,viewer,accessToken])
+   
 
     return ( 
       <userInfoContext.Provider 
       value={[[fullNameState,setFullName],
       [passwordState,setPassword],
       [emailState,setEmail],
-      [isAuth, SetisAuth],
+      [isLoggedIn, setIsLoggedIn],
       [viewer, setViewer],
-      [accessToken, SetaccessToken]]}>
+      ]}>
            {children}
       </userInfoContext.Provider>
     )

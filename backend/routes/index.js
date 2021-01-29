@@ -36,11 +36,10 @@ app.use(cookieParser());
 // })
 
 /* GET home page. */
-<<<<<<< HEAD
-app.get("/apiv1/home%0A", (req, res) => {
-=======
-app.get("/apiv1/home", authenticateCookie, (req, res) => {
->>>>>>> 926597fe9a611558be28f67c77ae1c70c092162d
+
+
+app.get("/apiv1/home%0A", authenticateCookie, (req, res) => {
+
   res.render("index", { title: "Express" });
   res.sendStatus(200);
 });
@@ -49,17 +48,26 @@ const posts = [
   {
     id: 0,
     username: "Boaz",
-    password: "arsenalSucks",
+    password: "123",
+    email: "Arsenal@.gmail.com",
+    isLoggenin: false,
+    viewer: 1
   },
   {
     id: 1,
     username: "Dor",
-    password: "123",
+    password: "12345",
+    email: "FuckManU@.gmail.com",
+    isLoggenin: false,
+    viewer: 1
   },
   {
     id: 2,
     username: "Zeev",
     password: "SmolHazak",
+    email: "LoveBeizim@.gmail.com",
+    isLoggenin: false,
+    viewer: 2
   },
 ];
 
@@ -70,10 +78,11 @@ app.get("/posts%0A", authenticateToken, (req, res) => {
 
 app.get("/cookie", (req, res) => {
   console.log(req.headers);
+  //Dor - need to add here a way to handle if there is no cookie on the header.
+  // this happend afer you clear the cookie and i am sending you a route to cookie.
   const jwtToken = req.headers.cookie.replace("session_id=", "");
   const jwtVerify = jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET);
   res.send(jwtVerify);
-  res.sendStatus(200);
 });
 
 function authenticateCookie(req, res, next) {
@@ -93,27 +102,22 @@ app.post("/login", (req, res) => {
   const username = req.body.username;
   console.log(username);
   const password = req.body.password;
-  // Send back to client json with all data (Front) - (DB) - Check if user exist && Password ? Return user's details : Deny (401)
-  // TODO - Set cookie for client -> { accessToken(Data) }
   let user;
-  let userId;
   let indexId;
   posts.some((a) => a.username === username)
     ? (indexId = posts.map((i) => i.username).indexOf(username))
     : (indexId = null);
   console.log(indexId);
-  userId = posts[indexId].id;
-  // console.log(userId);
+
   if (posts[indexId].password === password) {
-    user = { name: username, id: userId };
+    user = {name: posts[indexId].username, id: posts[indexId].id, email: posts[indexId].email, loggedIn: true, viewer: posts[indexId].viewer};
   } else {
     user = null;
   }
   if (user != null) {
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    // set cookie({ accessToken: accessToken })
     res.cookie("session_id", accessToken);
-    res.json({ userRes: user });
+    res.json({userRes: user});
     res.sendStatus(200);
   } else {
     res.sendStatus(404);

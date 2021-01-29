@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import "../../App.css";
 import InfoInput from "./InfoInput";
 import SubmitButton from "./SubmitButton";
@@ -6,19 +6,21 @@ import { useHistory } from "react-router-dom";
 import { userInfoContext } from "../Contexts/LoginContext/userInfoProvider";
 
 const SignIn = () => {
-  const history = useHistory();
-  const [Name, Password, , isAuthenticated, Viewer, accessToken] = useContext(
-    userInfoContext
-  );
-  const [passwordState, setPassword] = Password;
-  const [fullNameState, setFullName] = Name;
-  const [isAuth, SetisAuth] = isAuthenticated;
-  const [viewer, setViewer] = Viewer;
-  const [accessTokenState, SetaccessToken] = accessToken;
 
-  const submitHandler = () => {
-    console.log("clicked");
-    fetch("/login", {
+const history = useHistory();
+const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
+
+const [passwordState,setPassword] = Password
+const [emailState,setEmail] = Email
+const [fullNameState,setFullName] = Name
+const [isLoggedIn, setIsLoggedIn] = isLoggedInCheck
+const [viewer, setViewer] = Viewer
+
+  const  submitHandler  = async () => {
+    let response = null 
+    let message = null
+    try{
+     response = await fetch("/login", {
       method: "POST",
       body: JSON.stringify({
         username: fullNameState,
@@ -26,16 +28,25 @@ const SignIn = () => {
       }),
       headers: { "Content-Type": "application/json" },
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((responseData) => {
-        console.log(responseData);
-        SetaccessToken(responseData.accessToken);
-      })
-      .then(SetisAuth(true), setViewer(2))
-      .then(history.push("/MainTradeRoom"));
+  }
+  catch(err) {
+    message.innerHTML = "Error: " + err + ".";
+  }
+     const json = await response.json()
+     const jsonParse = json.userRes
+      setFullName(json.userRes.name)
+      setPassword("")
+      setEmail(jsonParse.email)
+      setIsLoggedIn(jsonParse.loggedIn)
+      setViewer(jsonParse.viewer)
+      history.push("/MainTradeRoom")   
   };
+
+
+//   useEffect(() => {
+//     console.log(" name " + fullNameState + " password " + passwordState + " email " + emailState +  " viewer " + viewer + " loggedIn " + isLoggedIn)
+// }, [submitHandler] )
+
   return (
     <div>
       <InfoInput
