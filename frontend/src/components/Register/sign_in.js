@@ -4,26 +4,30 @@ import InfoInput from "./InfoInput";
 import SubmitButton from "./SubmitButton";
 import { useHistory } from "react-router-dom";
 import { userInfoContext } from "../Contexts/LoginContext/userInfoProvider";
+import {validationInput} from "./validations"
 
 const SignIn = () => {
 
 const history = useHistory();
-const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
+const [FirstName, LastName, Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
 
+const [fisrtNameState,setfisrtNameState] = FirstName
+const [lastNameState,setlastNameState] = LastName
 const [passwordState,setPassword] = Password
 const [emailState,setEmail] = Email
-const [fullNameState,setFullName] = Name
 const [isLoggedIn, setIsLoggedIn] = isLoggedInCheck
 const [viewer, setViewer] = Viewer
 
   const  submitHandler  = async () => {
     let response = null 
     let message = null
+
+    if (validationInput(emailState,passwordState)) {
     try{
-     response = await fetch("/login", {
+     response = await fetch("/signin", {
       method: "POST",
       body: JSON.stringify({
-        username: fullNameState,
+        email: emailState,
         password: passwordState,
       }),
       headers: { "Content-Type": "application/json" },
@@ -34,13 +38,18 @@ const [viewer, setViewer] = Viewer
   }
      const json = await response.json()
      const jsonParse = json.userRes
-      setFullName(json.userRes.name)
+     console.log(jsonParse)
+      setfisrtNameState(jsonParse.first_name)
+      setlastNameState(jsonParse.last_name)
       setPassword("")
       setEmail(jsonParse.email)
-      setIsLoggedIn(jsonParse.loggedIn)
-      setViewer(jsonParse.viewer)
+      setIsLoggedIn(jsonParse.logged_In)
+      setViewer(jsonParse.has_profile)
       history.push("/MainTradeRoom")   
+   }
   };
+
+
 
 
 //   useEffect(() => {
@@ -51,14 +60,14 @@ const [viewer, setViewer] = Viewer
     <div>
       <InfoInput
         htmlFor="name"
-        labelname="Full Name"
+        labelname="Email"
         Inputtype="text"
         inputid="name"
-        placeholder="Enter your full name"
+        placeholder="Enter your email"
         Inputname="name"
-        value={fullNameState}
+        value={emailState} 
         onchange={(event) => {
-          setFullName(event.target.value);
+          setEmail(event.target.value);
         }}
       ></InfoInput>
       <InfoInput

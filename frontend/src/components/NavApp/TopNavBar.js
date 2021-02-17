@@ -4,24 +4,27 @@ import {NavLink} from 'react-router-dom'
 import {userInfoContext} from '../Contexts/LoginContext/userInfoProvider'
 
 const TopNavBar= () => {
-const [Name,Password,Email,isLoggedInCheck, Viewer] = useContext(userInfoContext)
-const [passwordState,setPassword] = Password
-const [emailState,setEmail] = Email
-const [fullNameState,setFullName] = Name
-const [isLoggedIn, SetisLoggedIn] = isLoggedInCheck
-const [viewer, setViewer] = Viewer
+  const [FirstName, LastName, Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
+
+  const [fisrtNameState,setfisrtNameState] = FirstName
+  const [lastNameState,setlastNameState] = LastName
+  const [passwordState,setPassword] = Password
+  const [emailState,setEmail] = Email
+  const [isLoggedIn, setIsLoggedIn] = isLoggedInCheck
+  const [viewer, setViewer] = Viewer
 
 
 const signHandler = () =>{
 if(isLoggedIn === true){
-  fetch("/logout",{
+  fetch("/signout",{
     method: "GET",
     headers: { "Content-Type": "application/json" },
   })
-  setFullName('')
+  setfisrtNameState("")
+  setlastNameState("")
   setEmail('')
   setPassword('')
-  SetisLoggedIn(false)
+  setIsLoggedIn(false)
   setViewer(0)
 }
 }

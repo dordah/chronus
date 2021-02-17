@@ -9,7 +9,6 @@ const Modal1 = (props) => {
 const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
 const [viewer, setViewer] = Viewer
  
-
   const removeCardHandler = (profession) => {
     props.removeCard(profession);
     
@@ -53,12 +52,20 @@ return (
     <Modal {...props} size={"lg"}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-            User Full Name -  {props.Profession}   
+            {props.firstname + " " + props.lastname} -  {props.Profession}   
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="show-grid">
         <Container>
-            {props.MainInfo}
+        <h6>User Review:</h6> 
+        {props.userProffesionExplanation}
+        <h6></h6> 
+        <h6>User Last Ratings:</h6> 
+        {`"` + props.lastRatings.Rating1 + `"`}
+        <h6></h6> 
+        {`"` + props.lastRatings.Rating2 + `"`}
+        <h6></h6> 
+        <h6>Pictures:</h6> 
         </Container>
       </Modal.Body>
       <Modal.Footer>

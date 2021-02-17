@@ -5,37 +5,67 @@ import InfoCheckBox from './infoCheckBox'
 import SubmitButton from './SubmitButton'
 import {userInfoContext} from '../Contexts/LoginContext/userInfoProvider'
 import {useHistory} from 'react-router-dom'
-
+import {validationInput} from "./validations"
 
 const SignUp = () => { 
 const history = useHistory();
-const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
+const [FirstName, LastName, Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
+
+const [fisrtNameState,setfisrtNameState] = FirstName
+const [lastNameState,setlastNameState] = LastName
 const [passwordState,setPassword] = Password
 const [emailState,setEmail] = Email
-const [fullNameState,setFullName] = Name
-const [isLoggedIn, SetisLoggedIn] = isLoggedInCheck
+const [isLoggedIn, setIsLoggedIn] = isLoggedInCheck
 const [viewer, setViewer] = Viewer
 
 
-const submitHandler = () => {
-    console.log('clicked');
-    fetch('http:/posts',{
-    method: 'GET',
-    // body: JSON.stringify({username:fullNameState}),//, password: passwordState, email: emailState}),
-    headers: {'Content-Type': 'application/json'},
-    }).then(response => {
-        return response.json()
-    }).then(responseData => {
-    }).then(SetisLoggedIn(true),setViewer(1)).then(history.push('/MainTradeRoom'))
-}
+const  submitHandler  = async () => {
+    let response = null 
+    let message = null
+
+    if (validationInput(emailState,passwordState)) {
+    try{
+     response = await fetch("/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        firs_tname: fisrtNameState,
+        last_name: lastNameState,
+        email: emailState,
+        password: passwordState,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+  }
+  catch(err) {
+    message.innerHTML = "Error: " + err + ".";
+  }
+     const json = await response.json()
+     const jsonParse = json.userRes
+      setfisrtNameState(jsonParse.firstname)
+      setlastNameState(jsonParse.lastname)
+      setPassword("")
+      setEmail(jsonParse.email)
+      setIsLoggedIn(jsonParse.loggedIn)
+      setViewer(jsonParse.has_profile)
+      history.push("/MainTradeRoom")   
+   }
+  };
+
     return (
         <div>
         <InfoInput 
-            htmlFor='name' labelname='Full Name' 
+            htmlFor='fisrtname' labelname='First Name' 
             Inputtype='text' inputid='name' 
-            placeholder='Enter your full name' Inputname='name'
-            value={fullNameState} 
-            onchange={event => {setFullName(event.target.value)}}>    
+            placeholder='Enter your First name' Inputname='name'
+            value={fisrtNameState} 
+            onchange={event => {setfisrtNameState(event.target.value)}}>    
+        </InfoInput>
+        <InfoInput 
+            htmlFor='name' labelname='Last name' 
+            Inputtype='text' inputid='name' 
+            placeholder='Enter your Last name ' Inputname='name'
+            value={lastNameState} 
+            onchange={event => {setlastNameState(event.target.value)}}>    
         </InfoInput>
         <InfoInput 
             htmlFor='password' labelname='Password' 

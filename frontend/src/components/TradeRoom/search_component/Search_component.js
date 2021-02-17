@@ -31,7 +31,7 @@ return (
   setSearchTerm = {setSearchTermState}
   searchTerm = {searchTermState}
   />
-  <div className="searchComponent" style={{overflow:"scroll", height:"500px", borderStyle: "solid", borderWidth: "5px", backgroundColor: "#eecc"}}>
+  <div className="searchComponent" style={{overflow:"scroll", height:"500px", borderStyle: "solid", borderWidth: "5px", backgroundColor: "#a0abb9"}}>
   <searchTermContext.Provider  value={searchTermState[0]}>
   <SearchTable
   searchterm={searchTermState}

@@ -20,6 +20,7 @@ const searchTable = (props) => {
     firstname={card.firstName}
     lastname={card.lastName}
     image={card.Picture}
+    usersLastRatings={card.UsersLastRatings}
     searchTerm={props.searchterm}
     removeCard={(key) => removeCardHandler(key)}
     />

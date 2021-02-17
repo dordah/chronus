@@ -14,14 +14,17 @@ const UserCard = (props) => {
 const [modalShow, setModalShow] = useState(false);
 const term = useContext(searchTermContext)
 console.log(props.searchTerm)
+
 const removeCardHandler = (profession) => {
 
 props.removeCard(profession);
 }
 
+let UserProffesionExplanationCut = props.UserProffesionExplanation.slice(0,50) + "...";
+
 return (
   <div>
-<Card style={{width: '52rem', marginTop: "10px"}}>
+<Card style={{width: '52rem', marginTop: "10px", backgroundColor: "#b1a6cc"}}>
   <Card.Header>
       <Row>
         <Col sm={8}>
@@ -54,7 +57,7 @@ return (
     <Card.Text>
         <Row>
             <Col sm={10}> 
-            {props.UserProffesionExplanation}
+            {UserProffesionExplanationCut}
             </Col>
              <Col sm={2}>
             </Col>
@@ -66,13 +69,14 @@ return (
 </Card>
 <UserModal 
    Profession={props.UserProffesion} 
-   MainInfo ={props.UserProffesionExplanation}
+   userProffesionExplanation ={props.UserProffesionExplanation}
    show={modalShow} 
   onHide={() => setModalShow(false)}
   setchatlist={props.setchatlist}
   chatlist={props.chatlist}
   firstname={props.firstname}
   lastname={props.lastname}
+  lastRatings={props.usersLastRatings}
   image={props.image}
   removeCard={(key) => removeCardHandler(key)}
   />

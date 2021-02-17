@@ -12,7 +12,7 @@
 
 .Register-side {
   width: 50%;
-  background-color: #c6fbff;;
+  background-color: #031d25;;
   padding: 25px 40px;
   overflow: auto;
 }
@@ -36,7 +36,7 @@
 }
 
 .PageSwitcher__Item--Active {
-  background-color: #b1a6cc;
+  background-color: #0e2e53;
   color: white;
 }
 
@@ -91,7 +91,7 @@
   width: 85%;
   background-color: transparent;
   border: none;
-  color:  #445366;
+  color:  #909fb3;
   outline: none;
   border-bottom: 1px solid #445366;
   font-size: 1em;
@@ -101,11 +101,11 @@
 }
 
 .FormField__Input::placeholder {
-  color: #616E7F;
+  color: #929dac;
 }
 
 .FormField__Button {
-  background-color: #b1a6cc;
+  background-color: #14072c;
   color: white;
   border: none;
   outline: none;
@@ -116,7 +116,7 @@
 }
 
 .FormField__Link {
-  color: #66707D;
+  color: #a0abb9;
   text-decoration: none;
   display: inline-block;
   border-bottom: 1.5px solid #225E62;
@@ -124,7 +124,7 @@
 }
 
 .FormField__CheckboxLabel {
-  color: #646F7D;
+  color: #bcc4ce;
   font-size: .9em;
 }
 
@@ -135,7 +135,7 @@
 
 .FormField__TermsLink {
   color: rgb(10, 15, 20);;
-  border-bottom: 1px solid #199087;
+  border-bottom: 1px solid #4ccdd6;
   text-decoration: none;
   display: inline-block;
   padding-bottom: 2px;
@@ -159,4 +159,10 @@
 .box{
   width: 100 px;
   height: 100 px;
+}
+.AppBackround{
+  background-color: #031d25;
+}
+.CardBackround{
+  background-color: #b1a6cc;
 }

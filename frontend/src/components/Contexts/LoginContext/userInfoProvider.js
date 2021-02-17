@@ -4,7 +4,8 @@ export const userInfoContext = createContext({})
 
 const UserInfoProvider = ({children}) => {
 
-    const [fullNameState,setFullName] = useState("") 
+    const [fisrtNameState,setfisrtNameState] = useState("") 
+    const [lastNameState,setlastNameState] = useState("") 
     const [passwordState,setPassword] = useState("") 
     const [emailState,setEmail] = useState("") 
     const [isLoggedIn , setIsLoggedIn] = useState(false) // is user is logged in, info from server
@@ -26,7 +27,8 @@ const UserInfoProvider = ({children}) => {
     const json = await response.json()
     console.log(json)
     if (json !== undefined) {
-        setFullName(json.name)
+        setfisrtNameState(json.userfirstname)
+        setfisrtNameState(json.userlastname)
         setPassword("")
         setEmail(json.email)
         setIsLoggedIn(json.loggedIn)
@@ -37,7 +39,9 @@ const UserInfoProvider = ({children}) => {
 
     return ( 
       <userInfoContext.Provider 
-      value={[[fullNameState,setFullName],
+      value={[
+      [fisrtNameState,setfisrtNameState],
+      [lastNameState,setlastNameState],
       [passwordState,setPassword],
       [emailState,setEmail],
       [isLoggedIn, setIsLoggedIn],

@@ -26,3 +26,8 @@ Use this guide, use "cra-template-redux". We will use REACT.JS WITH REDUX
 
 1. Read about Redux
 1. Read about react-connect (connects react + redux)
+
+
+
+Boaz To Do - 
+1) switching between sign in and sign up need to delete state. 

@@ -29,6 +29,7 @@ useEffect(() => {
   profesison={card.UserProffesion}
   name={card.firstName+" "+card.lastName}
   Image={card.Picture}
+  lastRatings={card.UsersLastRatings}
   removeCard={() => removeCardHandler(card.UserProffesion)}
   />
   )
@@ -43,7 +44,7 @@ const removeCardHandler = (profession) => {
 
 
 return (
-<div > 
+<div className="AppBackround"> 
 <TopNavBar/> 
   <Row>
     <Col></Col>

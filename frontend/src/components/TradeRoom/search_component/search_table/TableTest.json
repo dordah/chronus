@@ -2,8 +2,13 @@
 "firstName": "Elishya",
 "lastName": "Jordan",    
 "UserProffesion":"Cleaning Lady", 
-"UserProffesionExplanation":"my name is elishia, and have 10 years expeariance.",
+"UserProffesionExplanation":"my name is elishia, and have 10 years expeariance.jjjjjjjjjjjjjjjjjjfjfjfjfjdfkvjdnfl nfd dif ndlf knc ldk nd df f f fdfkdjn kdjf ndofiu enfoif nskjc ns,c sln nif",
 "Rating": "5",
+"UsersLastRatings": {
+    "Rating1": "absolutly graet!",
+    "Rating2": "He was great!"
+    
+},
 "Picture": "https://www.rewigs.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/u/auburn_brown_hair_color_african_american_curly_wig.jpg"
 },
 {"id":"2", 
@@ -12,6 +17,11 @@
     "UserProffesion":"Gym Instructure", 
     "UserProffesionExplanation":"My name is Jon and i am a gym teacher that does functional training come and train with me!",
     "Rating": "4",
+    "UsersLastRatings": {
+        "Rating1": "absolutly graet!",
+        "Rating2": "He was great!"
+        
+    },
     "Picture": "https://previews.123rf.com/images/michaeljung/michaeljung1411/michaeljung141100430/34093255-portrait-of-happy-male-gym-instructor.jpg"
 },
 {"id":"3", 
@@ -20,6 +30,11 @@
     "UserProffesion":"Devops Developer", 
     "UserProffesionExplanation":"Expiriance Devops developer that is nearly 2 years working for google. will be glad to have ypu on board",
     "Rating": "4.5",
+    "UsersLastRatings": {
+        "Rating1": "absolutly graet!",
+        "Rating2": "He was great!"
+        
+    },
     "Picture": "https://res.cloudinary.com/practicaldev/image/fetch/s--_HBZhuhF--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/nweeqf97l2md3tlqkjyt.jpg"
 },
 {"id":"4",
@@ -28,6 +43,11 @@
     "UserProffesion":"Beautician", 
     "UserProffesionExplanation":"i am a expirianced Beautician expert more info on my feed",
     "Rating": "3",
+    "UsersLastRatings": {
+        "Rating1": "absolutly graet!",
+        "Rating2": "He was great!"
+        
+    },
     "Picture": "https://cdn.shopify.com/s/files/1/0360/5381/1339/products/il_fullxfull.2052945771_le75_11782a4b-b87e-4598-8287-ddc4615de5cb_1512x.jpg"
 },
 {"id":"5", 
@@ -36,6 +56,11 @@
     "UserProffesion":"Film Additor", 
     "UserProffesionExplanation":"i am a film additor for 15 years working with primire as IDE, join me!",
     "Rating": "5",
+    "UsersLastRatings": {
+        "Rating1": "absolutly graet!",
+        "Rating2": "He was great!"
+        
+    },
     "Picture": "https://www.rewigs.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/u/auburn_brown_hair_color_african_american_curly_wig.jpg"
 },
 {"id":"6", 
@@ -44,6 +69,11 @@
         "UserProffesion":"masseur", 
         "UserProffesionExplanation":"My name is fredrick and i do Thai massage only!",
         "Rating": "4",
+        "UsersLastRatings": {
+            "Rating1": "absolutly graet!",
+            "Rating2": "He was great!"
+            
+        },
         "Picture": "https://previews.123rf.com/images/michaeljung/michaeljung1411/michaeljung141100430/34093255-portrait-of-happy-male-gym-instructor.jpg"
     },
 {"id":"7", 
@@ -52,6 +82,11 @@
         "UserProffesion":"Carpenter", 
         "UserProffesionExplanation":"hii all! i do wood work for fun! i do some good stuff at home please see pics on my main page",
         "Rating": "4.7",
+        "UsersLastRatings": {
+            "Rating1": "absolutly graet!",
+            "Rating2": "He was great!"
+            
+        },
         "Picture": "https://res.cloudinary.com/practicaldev/image/fetch/s--_HBZhuhF--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/nweeqf97l2md3tlqkjyt.jpg"
     },
 {"id":"8", 
@@ -60,6 +95,11 @@
         "UserProffesion":"Java Developer", 
         "UserProffesionExplanation":"i am working at facebook for 3 years, and would like to teach you coding",
         "Rating": "3",
+        "UsersLastRatings": {
+            "Rating1": "absolutly graet!",
+            "Rating2": "He was great!"
+            
+        },
         "Picture": "https://cdn.shopify.com/s/files/1/0360/5381/1339/products/il_fullxfull.2052945771_le75_11782a4b-b87e-4598-8287-ddc4615de5cb_1512x.jpg"
 }
 ]

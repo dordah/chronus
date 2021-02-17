@@ -6,16 +6,17 @@ import { userInfoContext } from "../Contexts/LoginContext/userInfoProvider";
 
 const Home = () => {
 
-const [Name,Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
+    const [FirstName, LastName, Password,Email,isLoggedInCheck,Viewer] = useContext(userInfoContext)
 
-const [passwordState,setPassword] = Password
-const [emailState,setEmail] = Email
-const [fullNameState,setFullName] = Name
-const [isLoggedIn, setIsLoggedIn] = isLoggedInCheck
-const [viewer, setViewer] = Viewer
+    const [fisrtNameState,setfisrtNameState] = FirstName
+    const [lastNameState,setlastNameState] = LastName
+    const [passwordState,setPassword] = Password
+    const [emailState,setEmail] = Email
+    const [isLoggedIn, setIsLoggedIn] = isLoggedInCheck
+    const [viewer, setViewer] = Viewer
 
 const textContextHandler = () => {
-    console.log(" name " + fullNameState + " password " + passwordState + " email " + emailState +  " viewer " + viewer + " loggedIn " + isLoggedIn)
+    console.log(" firstname " + fisrtNameState + " lastname " + lastNameState + " password " + passwordState + " email " + emailState +  " viewer " + viewer + " loggedIn " + isLoggedIn)
     //  fetch("/cookie", {
     //  method: "GET",
     //  headers: { "Content-Type": "application/json"},
