@@ -14,4 +14,5 @@ module.exports = new Sequelize("v1", "postgres", "united", {
     acquire: 30000,
     idle: 10000,
   },
+  operatorsAliases: 0
 });
