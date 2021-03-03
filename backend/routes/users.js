@@ -16,30 +16,36 @@ router.get("/", (_req, res, next) =>
 router.post("/signin/post", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  wrongPassword(email, password).then((user) => {
-    console.log(`password is ${user.password}`);
-  });
-  userByNameAndPassword(email, password).then((user) => {
-    console.log(user);
-    if (user.length == 0) {
-      // res.json({ userRes: user });
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(409);
-    }
+  userByEmail(email).then((user) => {
+    // userRecord = user.auth_users.dataValues;
+    userRecord = user[0];
+    console.log(`User email is ${userRecord.email}`);
+    console.log(`Input email is ${email}`);
+    console.log(`Input password is ${userRecord.password}`);
+    console.log(`Input password is ${password}`);
+    res.sendStatus(401);
   });
 });
+
+// userByNameAndPassword(email, password).then((user) => {
+//   console.log(user);
+//   if (user.length == 0) {
+//     // res.json({ userRes: user });
+//     res.sendStatus(200);
+//   } else {
+//     res.sendStatus(409);
+//   }
+// });
 
 const allUsers = async () => {
   const users = await Users.findAll();
   return users;
 };
 
-const userByNameAndPassword = async (email, password) => {
+const userByEmail = async (email) => {
   const user = await Users.findAll({
     where: {
       email: email,
-      password: password,
     },
   });
   return user;
@@ -49,7 +55,7 @@ const wrongPassword = async (email, password) => {
   const user = await Users.findAll({
     where: {
       email: email,
-      [Op.not]: [password],
+      [Op.not]: { password: [password] },
     },
   });
   return user;
