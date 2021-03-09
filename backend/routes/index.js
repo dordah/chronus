@@ -1,21 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Pool, Client } = require("pg");
-const { query } = require("express");
-const router = express.Router();
-const exphbs = require("express-handlebars");
-// const conncetionString = "postgressql://postgres:united@localhost:5432/v1";
-const path = require("path");
-const exp = require("express-handlebars");
 const app = express();
 const jwt = require("jsonwebtoken");
 var cookieParser = require("cookie-parser");
 
 // Database
 const db = require("./config/database");
-const { nextTick } = require("process");
-const { verify } = require("crypto");
 
 // Test db connection
 db.authenticate()
@@ -25,15 +16,17 @@ db.authenticate()
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// const client = new Client({
-//   connectionString: conncetionString,
-// });
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
 
-// client.connect();
-
-// client.query(`SELECT * from users where name = '${name}'`,(err, res)=>{
-//   console.log(err,res)
-// })
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
 
 /* GET home page. */
 
@@ -75,13 +68,6 @@ app.get("/posts", authenticateToken, (req, res) => {
   res.json({ username });
 });
 
-// TODO - internal usage
-// app.get("/user", authenticateToken, (req, res) =>{
-//   // Q - all users
-//   // allUsers.filter ((user) => user.first_name)
-//   username =
-// })
-
 app.get("/cookie", (req, res) => {
   console.log(req.headers);
   // Dor - need to add here a way to handle if there is no cookie on the header.
@@ -92,12 +78,21 @@ app.get("/cookie", (req, res) => {
 });
 
 function authenticateCookie(req, res, next) {
-  const jwtToken = req.headers.cookie;
-  jwtToken === undefined ? res.sendStatus(401) : replace("session_id=", "");
-  if (jwtToken == null) return res.sendStatus(401);
+  let jwtToken = req.headers.cookie;
+  console.log(`jwt Token before replace() is ${jwtToken}`);
+  jwtToken === undefined
+    ? res.sendStatus(401)
+    : (jwtToken = jwtToken.replace("session_id=", ""));
+  console.log(`jwt Token after replace() is ${jwtToken}`);
+  if (jwtToken == null) {
+    return res.sendStatus(401);
+  }
 
   jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) {
+      console.log(err);
+      return res.sendStatus(403);
+    }
     req.user = user;
     next();
   });
@@ -137,18 +132,6 @@ app.post("/signin", (req, res) => {
     res.sendStatus(404);
   }
 });
-
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
 
 app.post("/apiv1/user/register", (req, res) => {
   console.log(req.body);
