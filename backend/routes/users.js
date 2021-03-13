@@ -7,6 +7,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const { servicesVersion } = require("typescript");
 
 router.use(bodyParser.json());
 router.use(cookieParser());
@@ -41,6 +42,24 @@ router.get("/", authenticateCookie, (_req, res, next) =>
     .catch((err) => console.log(err))
 );
 
+router.post("/signup/post", (req, res, next) => {
+  // check mail doesn't exist -> if it is => send 409 conflict -> if it is not => insert to auth_users + send 200
+  const email = req.body.email;
+  const password = req.body.password;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  allUsers()
+    .then((users) => {
+      const records = users.map((result) => result.email);
+      const isExists = records.find((value) => value === email);
+      isExists === undefined
+        ? res.sendStatus(409)
+        : createUser(email, password, first_name, last_name) &&
+          res.sendStatus(200);
+    })
+    .catch((err) => res.sendStatus(404));
+});
+
 router.post("/signin/post", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -48,7 +67,6 @@ router.post("/signin/post", (req, res, next) => {
     .then((user) => {
       // userRecord = user.auth_users.dataValues;
       userRecord = user[0];
-      console.log(user);
       console.log(`User Fname ${userRecord.first_name}`);
       if (userRecord.password == password) {
         user = {
@@ -68,21 +86,6 @@ router.post("/signin/post", (req, res, next) => {
     .catch((err) => res.sendStatus(403));
 });
 
-// userByNameAndPassword(email, password).then((user) => {
-//   console.log(user);
-//   if (user.length == 0) {
-//     // res.json({ userRes: user });
-//     res.sendStatus(200);
-//   } else {
-//     res.sendStatus(409);
-//   }
-// });
-
-const allUsers = async () => {
-  const users = await Users.findAll();
-  return users;
-};
-
 const userByEmail = async (email) => {
   const user = await Users.findAll({
     where: {
@@ -92,14 +95,19 @@ const userByEmail = async (email) => {
   return user;
 };
 
-const wrongPassword = async (email, password) => {
-  const user = await Users.findAll({
-    where: {
-      email: email,
-      [Op.not]: { password: [password] },
-    },
+const createUser = async (email, password, first_name, last_name) => {
+  const user = await Users.create({
+    email: email,
+    password: password,
+    first_name: first_name,
+    last_name: last_name,
   });
-  return user;
+  console.log(`${firs_name}'s auto-generated ID:`, user.id);
+};
+
+const allUsers = async () => {
+  const users = await Users.findAll();
+  return users;
 };
 
 module.exports = router;

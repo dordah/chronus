@@ -145,14 +145,4 @@ app.get("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
-// TODO - signup POST: -> check the user does not exist in the users table and insert
-
-// User routes
-// app.use("apiv1/users", require("./users"));
-
-// app.use("apiv1/transations", require("./transactions"));
-
-// Main route
-// app.use("/apiv1", router);
-
 module.exports = app;
