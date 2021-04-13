@@ -14,6 +14,8 @@ const suppliesRouter = require("./routes/supplies");
 const ratingsRouter = require("./routes/ratings");
 const demandsRouter = require("./routes/demands");
 const creditsRouter = require("./routes/credits");
+const tradeRoomRouter = require("./routes/tradeRoom");
+const profileRouter = require("./routes/profile");
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use("/supplies", suppliesRouter);
 app.use("/ratings", ratingsRouter);
 app.use("/demands", demandsRouter);
 app.use("/credits", creditsRouter);
+app.use("/traderoom", tradeRoomRouter);
+app.use("/profile", profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

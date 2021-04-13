@@ -35,46 +35,15 @@ app.get("/apiv1/home", authenticateCookie, (req, res) => {
   res.sendStatus(200);
 });
 
-const posts = [
-  {
-    id: 0,
-    username: "Boaz",
-    password: "123",
-    email: "Arsenal@.gmail.com",
-    isLoggenin: false,
-    viewer: 2,
-  },
-  {
-    id: 1,
-    username: "Dor",
-    password: "12345",
-    email: "FuckManU@.gmail.com",
-    isLoggenin: false,
-    viewer: 1,
-  },
-  {
-    id: 2,
-    username: "Zeev",
-    password: "SmolHazak",
-    email: "LoveBeizim@.gmail.com",
-    isLoggenin: false,
-    viewer: 2,
-  },
-];
-
-// For Front
-app.get("/posts", authenticateToken, (req, res) => {
-  username = posts.filter((post) => post.username === req.user.name);
-  res.json({ username });
-});
-
 app.get("/cookie", (req, res) => {
-  console.log(req.headers);
-  // Dor - need to add here a way to handle if there is no cookie on the header.
-  // This happend afer you clear the cookie and i am sending you a route to cookie.
-  const jwtToken = req.headers.cookie.replace("session_id=", "");
-  const jwtVerify = jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET);
-  res.send(jwtVerify);
+  if (req.headers == (undefined || null || "")) {
+    res.sendStatus(401);
+  } else {
+    console.log(req.headers);
+    const jwtToken = req.headers.cookie.replace("session_id=", "");
+    const jwtVerify = jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET);
+    res.send(jwtVerify);
+  }
 });
 
 function authenticateCookie(req, res, next) {

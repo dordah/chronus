@@ -4,12 +4,10 @@ const router = express.Router();
 const Users = require("./models/auth_users");
 const bodyParser = require("body-parser");
 const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const { servicesVersion } = require("typescript");
+const { NOW } = require("sequelize");
 
-router.use(bodyParser.json());
 router.use(cookieParser());
 
 function authenticateCookie(req, res, next) {
@@ -51,11 +49,13 @@ router.post("/signup/post", (req, res, next) => {
   allUsers()
     .then((users) => {
       const records = users.map((result) => result.email);
+      console.log(records);
       const isExists = records.find((value) => value === email);
       isExists === undefined
-        ? res.sendStatus(409)
-        : createUser(email, password, first_name, last_name) &&
-          res.sendStatus(200);
+        ? createUser(email, password, first_name, last_name).catch((err) =>
+            console.log(err)
+          ) && res.sendStatus(200)
+        : res.sendStatus(409);
     })
     .catch((err) => res.sendStatus(404));
 });
@@ -83,7 +83,7 @@ router.post("/signin/post", (req, res, next) => {
         res.sendStatus(401);
       }
     })
-    .catch((err) => res.sendStatus(403));
+    .catch((err) => console.log(err) && res.sendStatus(403));
 });
 
 const userByEmail = async (email) => {
@@ -101,8 +101,10 @@ const createUser = async (email, password, first_name, last_name) => {
     password: password,
     first_name: first_name,
     last_name: last_name,
+    created_date: Sequelize.fn("NOW"),
+    modified_date: Sequelize.fn("NOW"),
   });
-  console.log(`${firs_name}'s auto-generated ID:`, user.id);
+  console.log(`${first_name}'s auto-generated ID:`, user.id);
 };
 
 const allUsers = async () => {

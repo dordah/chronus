@@ -31,7 +31,7 @@ const [modalShow, setModalShow] = useState(false)
                        </Card.Body> 
                   </Col>
                   <Col sm={2}>
-                  <DropdownButton  disabled={viewer == 0 || viewer == 1} style={{marginTop: "30px"}} id="dropdown-basic-button" title="">
+                  <DropdownButton  disabled={viewer == false} style={{marginTop: "30px"}} id="dropdown-basic-button" title="">
                   <Dropdown.Item  href="#/action-1" onClick={props.removeCard} > Remove from list</Dropdown.Item>
                   <Dropdown.Item href="#/action-2" onClick={() => setModalShow(true)}>Transact money</Dropdown.Item>
                   </DropdownButton>     

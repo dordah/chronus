@@ -1,22 +1,13 @@
 const { Sequelize } = require("sequelize");
 const db = require("../config/database");
 
-const Ratings = db.define("ratings", {
+const chat_lists = db.define("chat_lists", {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
   },
-  rate: {
-    type: Sequelize.INTEGER,
-  },
-  text: {
-    type: Sequelize.STRING,
-  },
-  from_id: {
-    type: Sequelize.INTEGER,
-  },
-  on_id: {
-    type: Sequelize.INTEGER,
+  chat_list: {
+    type: Sequelize.JSONB,
   },
   created_date: {
     type: Sequelize.DATE,
@@ -26,4 +17,4 @@ const Ratings = db.define("ratings", {
   },
 });
 
-module.exports = Ratings;
+module.exports = chat_lists;

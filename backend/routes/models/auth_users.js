@@ -41,6 +41,9 @@ const auth_users = db.define("auth_users", {
   is_active: {
     type: Sequelize.BOOLEAN,
   },
+  chat_list: {
+    type: Sequelize.JSONB,
+  },
 });
 
 module.exports = auth_users;

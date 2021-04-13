@@ -49,7 +49,7 @@ const SignIn = () => {
       setlastNameState(jsonParse.last_name);
       setPassword("");
       setEmail(jsonParse.email);
-      setIsLoggedIn(jsonParse.logged_In);
+      setIsLoggedIn(true);
       setViewer(jsonParse.has_profile);
       history.push("/MainTradeRoom");
     }

@@ -45,7 +45,7 @@ const  submitHandler  = async () => {
       setlastNameState(jsonParse.lastname)
       setPassword("")
       setEmail(jsonParse.email)
-      setIsLoggedIn(jsonParse.loggedIn)
+      setIsLoggedIn(true)
       setViewer(jsonParse.has_profile)
       history.push("/MainTradeRoom")   
    }
